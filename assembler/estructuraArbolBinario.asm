@@ -10,7 +10,7 @@ section .text
 extern malloc, free
 global createArbol
 
-createArbol_asm:
+createArbol:
   ; Argumentos:
   ; rdi: Valor del nodo
   ; rsi: Puntero al nodo izquierdo
@@ -38,4 +38,4 @@ createArbol_asm:
   ret
 
 .malloc_failed:
-  ; Maneja la falla de malloc, puedes agregar código aquí para manejar errores
+  ; Maneja la falla de malloc, fallo la asignacion de memoria
