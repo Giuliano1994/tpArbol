@@ -11,15 +11,8 @@ struct Arbol {
 
 // Declaración de la función en ensamblador para crear un nodo del árbol
 // Al llamar al metodo createArbol utulizamos la funcion creada en ensamblador que crea la estructura de arbol 
-struct Arbol* createArbol(long long value, struct Arbol* left, struct Arbol* right) {
-    struct Arbol* node = (struct Arbol*)malloc(sizeof(struct Arbol));
-    node->value = value;
-    node->left = left;
-    node->right = right;
-    return node;
-}
-
-
+extern struct Arbol* createArbol(long long value, struct Arbol* left, struct Arbol* right); 
+  
 
 /*
 void imprimirArbol(struct Arbol *nodo){
@@ -33,11 +26,23 @@ void imprimirArbol(struct Arbol *nodo){
         }
     }
 }
-
 */
 
+void imprimirArbol(struct Arbol* nodo) {
+    if (nodo != NULL) {
+        // Imprime el valor del nodo actual
+        printf("%lld\n", nodo->value);
+
+        // Llama recursivamente a la función para los subárboles izquierdo y derecho
+        imprimirArbol(nodo->left);
+        imprimirArbol(nodo->right);
+    }
+}
+
+
+/*
 //Funcion para imprimir el arbol
-void imprimirArbol(struct Arbol* root, int nivel) {
+void imprimirArbol2(struct Arbol* root, int nivel) {
     if (root == NULL) {
         return;
     }
@@ -51,14 +56,20 @@ void imprimirArbol(struct Arbol* root, int nivel) {
     printf("%lld\n", root->value);
 
     // Recorre primero el subárbol izquierdo
-    imprimirArbol(root->left, nivel + 1);
+    imprimirArbol2(root->left, nivel + 1);
     
     // Luego, recorre el subárbol derecho
-    imprimirArbol(root->right, nivel + 1);
+    imprimirArbol2(root->right, nivel + 1);
 }
+*/
+
 
 // Función para imprimir el árbol horizontalmente por capas
 void printTreeByLevels(struct Arbol* root) {
+    
+    printf("Valor en decimal: %lld\n", root->value);
+
+   
     if (root == NULL) {
         return;
     }
@@ -99,6 +110,7 @@ void printTreeByLevels(struct Arbol* root) {
 }
 
 
+
 // Función recursiva para liberar memoria del árbol
 void liberarArbol(struct Arbol* nodo) {
     if (nodo != NULL) {
@@ -113,6 +125,8 @@ void liberarArbol(struct Arbol* nodo) {
 // se utiliza la funcion createArbol generada en ensamblador
 struct Arbol* insertarNodo(struct Arbol* root, long long value){
     
+     printf("Valor en decimal: %lld\n", value);
+
     // Si el árbol está vacío, crea un nuevo nodo
     if (root == NULL) {    
         return createArbol(value, NULL, NULL);
@@ -129,9 +143,9 @@ struct Arbol* insertarNodo(struct Arbol* root, long long value){
     }
 
     printf("Árbol actualizado:\n");
-    //imprimirArbol(root, 0);
-   // imprimirArbol(root, 0);
-    printTreeByLevels(root);
+   // imprimirArbol2(root, 0);
+    imprimirArbol(root);
+   // printTreeByLevels(root);
     return root;
 }
 
@@ -155,9 +169,9 @@ int main() {
         }
     }
     
-     printf("Árbol final:\n");
-   printTreeByLevels(root);
-
+    printf("Árbol final:\n");
+ //   printTreeByLevels(root);
+    imprimirArbol(root);
     // Liberar memoria del árbol
     liberarArbol(root);
     
